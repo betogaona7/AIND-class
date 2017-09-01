@@ -10,8 +10,7 @@
 # We'll implement the dictionary as follows. The keys will be string corresponding to the boxes - namely, 'A1'
 # 'A2',.., 'I9'. The values will either be the digit in each box (if there is one) or a '.' (if not)
 
-
-# Display function shows a nice vuisual representation of the dictionary
+# Display function shows a nice visual representation of the dictionary
 def display(values):
     """
     Display the values as a 2-D grid.
@@ -44,17 +43,38 @@ col_units = [cross(rows, c) for c in cols] # col units
 square_units = [cross(rs, cs) for rs in ('ABC', 'DEF', 'GHI') for cs in ('123','456','789')] # square 3x3 units 
 
 unitlist = row_units + col_units + square_units
-
+#---------------------------------------------------------------------------------------
 # Turn te string reprentation of a sudoku intro a dictionary representation
 
 # A function to convert the string representation of a puzzle into a dictionary form 
+""" - Encoding board 
 def grid_values(values):
-	return dict([box, value] for box, value in zip(boxes, values))
+	return dict([box, value] for box, value in zip(boxes, values))"""
 
 """ Udacity solution 
 def grid_values(values):
     assert len(values) == 81, "Input grid must be a string of length 81 (9x9)"
     return dict(zip(boxes, values)) """
+#----------------------------------------------------------------------------------------
+
+# Strategy 1 - Elimination - If a box has a value addigned, then none of the peers of this box can have this value
+
+
+# As of now, we are recording the puzzles in dictonary form, where the keys are the boxes ('A1', 'A2', ..., 'I9') and 
+# the values are either the value for each box (if a value exists) or '.' (if the box has no value assigned yet). What
+# we really wantis for each value to represent all the avalaible values for that box. 
+
+
+""" - Improved grid_values fuction to return '123456789' instead of '.' for empty boxes """
+def grid_values(values):
+    dictionary = {}
+    for box, value in zip(boxes, values):
+        if value == '.':
+            value = '123456789'
+        dictionary[box] = value
+    return dictionary
+
+
 
 
 test = '..3.2.6..9..3.5..1..18.64....81.29..7.......8..67.82....26.95..8..2.3..9..5.1.3..'
