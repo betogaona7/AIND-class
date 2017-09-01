@@ -74,6 +74,17 @@ def grid_values(values):
         dictionary[box] = value
     return dictionary
 
+""" Udacity solution 
+def grid_values(grid):
+    values = []
+    all_digits = '123456789'
+    for c in grid:
+        if c == '.':
+            values.append(all_digits)
+        elif c in all_digits:
+            values.append(c)
+    assert len(values) == 81
+    return dict(zip(boxes, values)) """
 
 
 
