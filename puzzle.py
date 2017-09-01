@@ -101,6 +101,15 @@ def eliminate(values):
                 values[peer] = values[peer].replace(value,"")
     return values
 
+""" Udacity solution  
+def eliminate(values):
+    solved_values = [box for box in values.keys() if len(values[box]) == 1]
+    for box in solved_values:
+        digit = values[box]
+        for peer in peers[box]:
+            values[peer] = values[peer].replace(digit,'')
+    return values """
+
 test = '..3.2.6..9..3.5..1..18.64....81.29..7.......8..67.82....26.95..8..2.3..9..5.1.3..'
 
 display(eliminate(grid_values(test)))
