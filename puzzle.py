@@ -43,6 +43,10 @@ col_units = [cross(rows, c) for c in cols] # col units
 square_units = [cross(rs, cs) for rs in ('ABC', 'DEF', 'GHI') for cs in ('123','456','789')] # square 3x3 units 
 
 unitlist = row_units + col_units + square_units
+
+units = dict((s, [u for u in unitlist if s in u]) for s in boxes)
+peers = dict((s, set(sum(units[s],[]))-set([s])) for s in boxes)
+
 #---------------------------------------------------------------------------------------
 # Turn te string reprentation of a sudoku intro a dictionary representation
 
@@ -86,11 +90,21 @@ def grid_values(grid):
     assert len(values) == 81
     return dict(zip(boxes, values)) """
 
+# Function eliminate take as input a puzzle in dictionary form. The function will iterate over all the boxes in the puzzle
+# that only have one value assigned to them, and it will remove this value from every one of its peers
 
+""" - Implement eliminate() """
+def eliminate(values):
+    for box, value in values.items():
+        if len(value) == 1:
+            for peer in peers[box]:
+                values[peer] = values[peer].replace(value,"")
+    return values
 
 test = '..3.2.6..9..3.5..1..18.64....81.29..7.......8..67.82....26.95..8..2.3..9..5.1.3..'
 
-display(grid_values(test))
+display(eliminate(grid_values(test)))
+#display(grid_values(test))
 
 
 
