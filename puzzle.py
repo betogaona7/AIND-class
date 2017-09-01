@@ -2,10 +2,10 @@
 
 # The string will consist of a concatenation of all the readings of the digits in the rows, taking the rows 
 # to top from bottom. If the puzzle is not solved we can use a . as a placeholder for an empty box
-# For example, the unsolved puzzle at the above left will be written as:
-# ..3.2.6..9..3.5..1..1..18.64 ... 
-# And the solved puzzle at the above right will be recorded as:
-# 4839214633231123412341234132 ...
+# For example, an unsolved puzzle will be written as:
+# ..3.2.6..9..3.5..1..18.64....81.29..7.......8..67.82....26.95..8..2.3..9..5.1.3..
+# And the solved puzzle will be recorded as:
+# 483921657967345821251876493548132976729564138136798245372689514814253769695417382
 
 # We'll implement the dictionary as follows. The keys will be string corresponding to the boxes - namely, 'A1'
 # 'A2',.., 'I9'. The values will either be the digit in each box (if there is one) or a '.' (if not)
@@ -50,6 +50,12 @@ unitlist = row_units + col_units + square_units
 # A function to convert the string representation of a puzzle into a dictionary form 
 def grid_values(values):
 	return dict([box, value] for box, value in zip(boxes, values))
+
+""" Udacity solution 
+def grid_values(values):
+    assert len(values) == 81, "Input grid must be a string of length 81 (9x9)"
+    return dict(zip(boxes, values)) """
+
 
 test = '..3.2.6..9..3.5..1..18.64....81.29..7.......8..67.82....26.95..8..2.3..9..5.1.3..'
 
