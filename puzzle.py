@@ -128,13 +128,37 @@ def only_choice(values):
                 values[dplaces[0]] = digit
     return values
 
+#----------------------------------------------------------------------------------------
+
+# Constraint propagation - is all about using local constraints in a space (in the case of Sudoku, the constraints of 
+# each square) to dramatiically reduce the search space. As we enforce each constraint, we see how it introduces new 
+# constraints for other parts of the board that can help us further reduce the number of possibilities.
+
+
+# Apply constraint propagation
+def reduce_puzzle(values):
+    stalled = False 
+    while not stalled:
+        # Check how many boxes have a determined value 
+        solved_values_before = len([box for box in values.keys() if len(values[box]) == 1])
+        # Eliminate strategy
+        values = only_choice(eliminate(values))
+        # Only choise strategy
+        # Check how many boxes have a determined value, to compare 
+        solved_values_after = len([box for box in values.keys() if len(values[box]) == 1])
+        # If no new values were added, stop the loop
+        stalled = solved_values_before == solved_values_after
+        # Sanity check, return False if there is a box with zero available values:
+        if len([box for box in values.keys() if len(values[box]) == 0]):
+            return False
+    return values 
+
+
 
 
 test = '..3.2.6..9..3.5..1..18.64....81.29..7.......8..67.82....26.95..8..2.3..9..5.1.3..'
 
-#display(eliminate(grid_values(test)))
-display(only_choice(eliminate(grid_values(test))))
-#display(grid_values(test))
+display(reduce_puzzle(grid_values(test)))
 
 
 
