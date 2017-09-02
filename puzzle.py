@@ -157,8 +157,15 @@ def reduce_puzzle(values):
 
 
 test = '..3.2.6..9..3.5..1..18.64....81.29..7.......8..67.82....26.95..8..2.3..9..5.1.3..'
+#display(reduce_puzzle(grid_values(test)))
 
-display(reduce_puzzle(grid_values(test)))
+
+# With this version, the algorithm didn't solve this hard test. It seemed to reduce every box to a number 
+# of possibilities, but it won't go farther than that. So we need to improve our solution
+hard_test = '4.....8.5.3..........7......2.....6.....8.4......1.......6.3.7.5..2.....1.4......'
+display(reduce_puzzle(grid_values(hard_test)))
+
+
 
 
 
