@@ -110,9 +110,30 @@ def eliminate(values):
             values[peer] = values[peer].replace(digit,'')
     return values """
 
+
+#----------------------------------------------------------------------------------------
+
+# Strategy 2 - Only choice - Every unit must contain exactly one occurrence of every number 
+
+# If there is only one box in a unit which would allow a certain diit, then that box must be assigned that digit 
+# Only choice function take as input a puzzle in dictionary form. The function will go through all the units, with 
+# a digit that only fits in one possible box, it will assign that digit to that box
+
+def only_choice(values):
+    for unit in unitlist:
+        for digit in '123456789':
+            dplaces = [box for box in unit if digit in values[box]]
+            #print(dplaces)
+            if len(dplaces) == 1:
+                values[dplaces[0]] = digit
+    return values
+
+
+
 test = '..3.2.6..9..3.5..1..18.64....81.29..7.......8..67.82....26.95..8..2.3..9..5.1.3..'
 
-display(eliminate(grid_values(test)))
+#display(eliminate(grid_values(test)))
+display(only_choice(eliminate(grid_values(test))))
 #display(grid_values(test))
 
 
