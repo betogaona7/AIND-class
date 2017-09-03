@@ -134,7 +134,6 @@ def only_choice(values):
 # each square) to dramatiically reduce the search space. As we enforce each constraint, we see how it introduces new 
 # constraints for other parts of the board that can help us further reduce the number of possibilities.
 
-
 # Apply constraint propagation
 def reduce_puzzle(values):
     stalled = False 
@@ -153,19 +152,56 @@ def reduce_puzzle(values):
             return False
     return values 
 
+#----------------------------------------------------------------------------------------
 
+# Strategy 3 - Search using Depth First Search algorithm 
+
+# Without this strategy, the algorithm didn't solve the hard test. It seemed to reduce every box to a number 
+# of possibilities, but it won't go farther than that. So we need to improve our solution with search using DFS
+
+
+# Pick a box with a minimal number of possible values. Try to solve each of the puzles obtained by choosing 
+# each of thse values, recursively
+
+# using depth-first search and propagation, create a tree and solve the sudoku 
+def search(values):
+    # First, reduce the puzzle using the previous function
+    values = reduce_puzzle(values)
+    if not values:
+        return False
+    # Choose one of the unfilled squares with the fewest posibilities 
+    unfilled = [box for box in boxes if len(values[box]) > 1]
+
+    if len(unfilled) == 0: # That means sudoku was solved! 
+        return values
+
+    minimum = len(values[unfilled[0]]) # First element unfilled
+    boxselected = unfilled[0] # key of first element unfilled 
+
+    for box in unfilled:
+        if minimum > len(values[box]):
+            minimum = len(values[box]) 
+            boxselected = box 
+    
+    # Now use recursion to solve each one of the resulting sudokus, and if one returns a value (not False) return that answer
+    for digit in values[boxselected]:
+        new_sudoku = values.copy()
+        new_sudoku[boxselected] = digit
+        
+        #display(new_sudoku)
+        if search(new_sudoku):
+            return search(new_sudoku)
 
 
 test = '..3.2.6..9..3.5..1..18.64....81.29..7.......8..67.82....26.95..8..2.3..9..5.1.3..'
 #display(reduce_puzzle(grid_values(test)))
 
 
-# With this version, the algorithm didn't solve this hard test. It seemed to reduce every box to a number 
-# of possibilities, but it won't go farther than that. So we need to improve our solution
 hard_test = '4.....8.5.3..........7......2.....6.....8.4......1.......6.3.7.5..2.....1.4......'
-display(reduce_puzzle(grid_values(hard_test)))
+#display(reduce_puzzle(grid_values(hard_test)))
+#display(search(grid_values(test)))
 
-
+display(search(grid_values(hard_test)))
 
 
 
