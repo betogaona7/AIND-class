@@ -192,6 +192,23 @@ def search(values):
         if search(new_sudoku):
             return search(new_sudoku)
 
+""" Udacity solution 
+def search(values):
+    values = reduce_puzzle(values)
+    if values is False:
+        return False ## Failed earlier 
+    if all(len(values[s]) == 1 for s in boxes):
+        return values ## Solved!! 
+
+    # Choose one of the unfilled squares with the fewest possibilities 
+    n, s = min((len(values[s]), s) for s in boxes if len(values[s]) > 1)
+    # Now use recurrence to solve each one of the resulting sudokus
+    for value in values[s]:
+        new_sudoku = values.copy()
+        new_sudoku[s] = value
+        attempt = search(new_sudoku)
+        if attempt:
+            return attempt """
 
 test = '..3.2.6..9..3.5..1..18.64....81.29..7.......8..67.82....26.95..8..2.3..9..5.1.3..'
 #display(reduce_puzzle(grid_values(test)))
