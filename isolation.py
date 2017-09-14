@@ -66,24 +66,90 @@ class GameState:
     	""" Return a list of blank spaces on the board. """
     	return [(x,y) for y in range(ylimit) for x in range(xlimit) if self.board[x][y] == 0]
 
-class testcode:
 
-	print("Creating empty game board...")
-	g = GameState()
+def terminal_test(gameState):
+    """ Return True if the game is over for the active player
+    and False otherwise.
+    """
+    return not bool(gameState.get_legal_moves()) # No more moves
 
-	print("Getting legal moves for player 1...")
-	p1_empty_moves = g.get_legal_moves()
-	print("Found {} legal moves.".format(len(p1_empty_moves or [])))
+def min_value(gameState):
+    """ Return the value for a win (+1) if the game is over,
+    otherwise return the minimum value over all legal child
+    nodes.
+    """
+    if terminal_test(gameState):
+    	return 1
+    v = float("inf")
+    for m in gameState.get_legal_moves():
+    	v = min(v, max_value(gameState.forecast_move(m)))
+    return v
 
-	print("Applying move (0, 0) for player 1...")
-	g1 = g.forecast_move((0, 0))
 
-	print(g1.board)
+def max_value(gameState):
+    """ Return the value for a loss (-1) if the game is over,
+    otherwise return the maximum value over all legal child
+    nodes.
+    """
+    if terminal_test(gameState):
+    	return -1 
+    v = float("-inf")
+    for m in gameState.get_legal_moves():
+    	v = max(v, min_value(gameState.forecast_move(m)))
+    return v
 
-	print("Getting legal moves for player 2...")
-	p2_empty_moves = g1.get_legal_moves()
-	if (0, 0) in set(p2_empty_moves):
-	    print("Failed\n  Uh oh! (0, 0) was not blocked properly when " +
-	          "player 1 moved there.")
-	else:
-	    print("Everything looks good!")
+def minimax_decision(gameState):
+    """ Return the move along a branch of the game tree that
+    has the best possible value.  A move is a pair of coordinates
+    in (column, row) order corresponding to a legal move for
+    the searching player.
+    
+    You can ignore the special case of calling this function
+    from a terminal state.
+    """
+    return  max(gameState.get_legal_moves(), key=lambda m: min_value(gameState.forecast_move(m)))
+    
+
+""" Test GameState
+print("Creating empty game board...")
+g = GameState()
+
+print("Getting legal moves for player 1...")
+p1_empty_moves = g.get_legal_moves()
+print("Found {} legal moves.".format(len(p1_empty_moves or [])))
+
+print("Applying move (0, 0) for player 1...")
+g1 = g.forecast_move((0, 0))
+
+print(g1.board)
+
+print("Getting legal moves for player 2...")
+p2_empty_moves = g1.get_legal_moves()
+if (0, 0) in set(p2_empty_moves):
+    print("Failed\n  Uh oh! (0, 0) was not blocked properly when " +
+          "player 1 moved there.")
+else:
+    print("Everything looks good!") """
+
+
+""" Test minimax_helper
+g = GameState()
+print("Calling min_value on an empty board...")
+v = min_value(g)
+if v == -1:
+    print("min_value() returned the expected score!")
+else:
+    print("Uh oh! min_value() did not return the expected score.") """
+
+# Test minimax
+best_moves = set([(0, 0), (2, 0), (0, 1)])
+rootNode = GameState()
+minimax_move = minimax_decision(rootNode)
+
+print("Best move choices: {}".format(list(best_moves)))
+print("Your code chose: {}".format(minimax_move))
+
+if minimax_move in best_moves:
+    print("That's one of the best move choices. Looks like your minimax-decision function worked!")
+else:
+    print("Uh oh...looks like there may be a problem.")
