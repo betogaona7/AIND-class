@@ -83,9 +83,7 @@ def depthFirstSearch(problem):
   print "Is the start a goal?", problem.isGoalState(problem.getStartState())
   print "Start's successors:", problem.getSuccessors(problem.getStartState())
   """
-  
   initial_state = problem.getStartState()
-
   if problem.isGoalState(initial_state):
      return []
 
@@ -96,25 +94,11 @@ def depthFirstSearch(problem):
   while not frontier.isEmpty():
     node, path = frontier.pop()
     explored.add(node)
-
     for child_node, action, cost in problem.getSuccessors(node):
       if child_node not in explored:
         if problem.isGoalState(child_node):
           return path + [action]
         frontier.push((child_node, path+[action]))
-  """
- 
-  while not states.isEmpty() and not problem.isGoalState(c):
-    state, actions = states.pop()
-    exploredState.append(state)
-    successor = problem.getSuccessors(state)
-    for i in successor:
-      coordinates = i[0]
-      if not coordinates in exploredState:
-        c = i[0]
-        direction = i[1]
-        states.push((coordinates, actions + [direction]))
-  return actions + [direction]"""
 
 def breadthFirstSearch(problem):
   """
@@ -122,7 +106,6 @@ def breadthFirstSearch(problem):
   [2nd Edition: p 73, 3rd Edition: p 82]
   """
   initial_state = problem.getStartState() 
-
   if problem.isGoalState(initial_state):
      return []
 
@@ -131,12 +114,9 @@ def breadthFirstSearch(problem):
   explored = set()
 
   while not frontier.isEmpty(): 
-    
     node, path = frontier.pop() # Chooses the shallowest node in frontier 
     explored.add(node)
-
     frontier_list = [frontier_node for (frontier_node, frontier_action) in frontier.list]
-
     for child_state, action, cost in problem.getSuccessors(node):
       if child_state not in explored or child_state not in frontier_list:
         if problem.isGoalState(child_state):
@@ -146,27 +126,26 @@ def breadthFirstSearch(problem):
 def uniformCostSearch(problem):
   "Search the node of least total cost first. "
   initial_state = problem.getStartState()
-
   frontier = util.PriorityQueue()
   frontier.push((initial_state, []), 0)
-
   explored = set()
 
   while not frontier.isEmpty():
-
     (node, path) = frontier.pop()
-
     if problem.isGoalState(node):
       return path
-
     if node not in explored:
       for child_state, action, child_cost in problem.getSuccessors(node):
         if child_state not in explored:
           frontier.push((child_state, path+[action]), problem.getCostOfActions(path+[action])+child_cost)
-
     explored.add(node)
   return path
 
+def manhattanHeuristic(position, problem, info={}):
+  "The Manhattan distance heuristic for a PositionSearchProblem"
+  xy1 = position
+  xy2 = problem.goal
+  return abs(xy1[0] - xy2[0]) + abs(xy1[1] - xy2[1])
 
 def nullHeuristic(state, problem=None):
   """
@@ -175,10 +154,24 @@ def nullHeuristic(state, problem=None):
   """
   return 0
 
-def aStarSearch(problem, heuristic=nullHeuristic):
+def aStarSearch(problem, heuristic=manhattanHeuristic):
   "Search the node that has the lowest combined cost and heuristic first."
-  "*** YOUR CODE HERE ***"
-  util.raiseNotDefined()
+  initial_state = problem.getStartState()
+  frontier = util.PriorityQueue()
+  frontier.push((initial_state,[]), heuristic(initial_state, problem))
+  explored = set()
+
+  while not frontier.isEmpty():
+    (node,path) = frontier.pop()
+    if problem.isGoalState(node):
+      return path
+    if node not in explored:
+      for child_state, action, cost in problem.getSuccessors(node):
+        if child_state not in explored:
+          frontier.push((child_state, path+[action]), problem.getCostOfActions(path+[action])+heuristic(child_state, problem))
+    explored.add(node)
+  return path
+
     
   
 # Abbreviations
