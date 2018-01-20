@@ -3,6 +3,9 @@ from keras.utils import np_utils
 from keras.models import Sequential 
 from keras.layers import Dense, Dropout, Flatten
 from keras.callbacks import ModelCheckpoint 
+'''
+Multi-layer perceptron for the Mnist handwritte digits dataset. 
+'''
 
 # Use keras to import pre-shuffled MNIST dataset
 (X_train, y_train), (X_test, y_test) = mnist.load_data()
