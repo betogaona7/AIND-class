@@ -4,7 +4,7 @@ from keras.models import Sequential
 from keras.layers import Dense, Dropout, Flatten
 from keras.callbacks import ModelCheckpoint 
 '''
-Multi-layer perceptron for the Mnist handwritte digits dataset. 
+Multi-layer perceptron to decode images of handwritten numerical digits. 
 '''
 
 # Use keras to import pre-shuffled MNIST dataset
