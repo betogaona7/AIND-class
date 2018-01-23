@@ -6,6 +6,7 @@ from keras.callbacks import ModelCheckpoint, EarlyStopping
 from keras.preprocessing.image import ImageDataGenerator
 
 # Accuracy = 0.7302 without image augmentation
+# Accuracy = 0.733 with image augmentation
 
 # Load the pre-shuffled train and test data
 (x_train, y_train),(x_test, y_test) = cifar10.load_data()
@@ -27,7 +28,7 @@ y_test = np_utils.to_categorical(y_test, 10)
 datagen_train = ImageDataGenerator(
 	width_shift_range = 0.1,  # Randomly shift images horizontally (10% of total width)
 	height_shift_range = 0.1, # Randomly shif images vertically (10% of total heigth)
-	horizontal_flip = True)    # Randomly flip images horizontally
+	horizontal_flip = True)   # Randomly flip images horizontally
 
 # Fit augmented image generator on data
 datagen_train.fit(x_train)
@@ -55,7 +56,7 @@ model.add(Dense(10, activation='softmax'))
 model.compile(loss='categorical_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
 
 # Train the model
-checkpointer = ModelCheckpoint(filepath='./cnncifar.weights.best.hdf5', verbose=1, save_best_only=True)
+checkpointer = ModelCheckpoint(filepath='./cnncifarwithda.weights.best.hdf5', verbose=1, save_best_only=True)
 earlystop = EarlyStopping(patience=10)
 
 # Train without data augmentation
@@ -67,8 +68,10 @@ epochs = 100
 # Train with data augmentation
 model.fit_generator(datagen_train.flow(x_train, y_train, batch_size=batch_size),
 	steps_per_epoch=x_train.shape[0] // batch_size,
+	epochs=epochs, verbose=2,
 	validation_data=(x_validation, y_validation),
-	validation_steps=x_validation.shape[0] // batch_size)
+	validation_steps=x_validation.shape[0] // batch_size,
+	callbacks=[checkpointer, earlystop])
 
 
 # Load the weights that yielded the best validation accuracy
