@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import cv2
 
-image = cv2.imread('')
+image = cv2.imread('./../../../images/hands.jpg')
 image_copy = np.copy(image)
 image_copy = cv2.cvtColor(image_copy, cv2.COLOR_BGR2RGB)
 
