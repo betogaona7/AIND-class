@@ -34,3 +34,19 @@ for i in range(0, dst.shape[0]):
 			# Image, center pt, radius, color, thickness
 			cv2.circle(corner_image, (j,i), 2, (0,255,0), 1)
 plt.imshow(corner_image)
+
+def dilation(image):
+	binary_image = cv2.imread(image, 0)
+	# Create a 5x5 kernel of ones
+	kernel = np.ones((5,5), np.unit8)
+	# Dilate the image
+	dilate_image = cv2.dilate(binary_image, kernel, iterations=1)
+	return dilate_image
+
+def erosion(image):
+	binary_image = cv2.imread(image, 0)
+	# Create a 5x5 kernel of ones
+	kernel = np.ones((5,5), np.unit8)
+	# Dilate the image
+	erode_image = cv2.erode(binary_image, kernel, iterations=1)
+	return erode_image
