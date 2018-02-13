@@ -19,3 +19,12 @@ model.fit(x, y, epochs=3000, batch_size=3, callbacks=[], verbose=0)
 
 # Print learned weights 
 print(model.get_weights())
+
+
+"""
+Financial times series
+"""
+model = Sequential()
+model.add(SimpleRNN(1, input_shape=(5,1)))
+model.add(Dense(1))
+model.compile(loss='meand_squared_error', optimizer='adam')
