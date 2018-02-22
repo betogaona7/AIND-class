@@ -28,10 +28,9 @@ def compute_bigram_model(path, files):
     content = ""
     for file in files:
         with open(file, "r") as f:
-            file_text = f.read() + " "
-            content += file_text
+            content += f.read() + " "
+
     # Clean and tokenize text (note that you may want to retain case and sentence delimiters)
-    #content = re.sub('[^a-zA-Z!,-.;?\w+\s+ ]',' ', content)
     content = re.findall(r'\w+|[^a-zA-Z\s+]', content)
     words = [word for word in content if word.strip() != ""]
     #print(words)
@@ -40,14 +39,15 @@ def compute_bigram_model(path, files):
     p_unigrams = Counter(words)
     # Compute bigram probabilities
     bigrams = [(words[i],words[i+1]) for i in range(len(words)-1)]
+
     p_bigrams = {}
-    for i in range(len(bigrams) - 1):
-        if not bigrams[i] in p_bigrams:
-            p_bigrams[bigrams[i]] = {}
-        if not bigrams[i+1] in p_bigrams[bigrams[i]]:
-            p_bigrams[bigrams[i]][bigrams[i+1]] = 1
-        else:
-            p_bigrams[bigrams[i]][bigrams[i+1]] += 1
+    for i in range(len(words)-1):
+        if not words[i] in p_bigrams:
+            p_bigrams[words[i]] = {}
+        if not words[i+1] in p_bigrams[words[i]]:
+            p_bigrams[words[i]][words[i+1]] = 1
+        if words[i+1] in p_bigrams[words[i]]:
+            p_bigrams[words[i]][words[i+1]] += 1 
     
     return p_unigrams, p_bigrams
 
