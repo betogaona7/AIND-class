@@ -2,3 +2,16 @@ GetNewFactIntent a fact
 GetNewFactIntent tell me a fact
 GetNewFactIntent give me a fact
 GetNewFactIntent give me something
+GetNewFactIntent fact
+GetNewFactIntent please tell me a fact
+GetNewFactIntent please give me a fact
+GetNewFactIntent please a fact
+GetNewFactIntent please give me something
+GetNewFactIntent hey tell me a fact
+GetNewFactIntent can you please give me a fact
+GetNewFactIntent can you tell me a fact
+GetNewFactIntent can you give me a fact
+GetNewFactIntent tell me something interesting
+GetNewFactIntent can you tell me something interesting
+GetNewFactIntent give me something interesting
+
