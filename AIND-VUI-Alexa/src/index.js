@@ -10,7 +10,7 @@ var GET_FACT_MSG_EN = [
     "Of course: "
 ]
 // Test hooks - do not remove!
-exports.GetFactMsg = GET_FACT_MSG_EN;
+exports.GetFactMsg = randomPhrase(GET_FACT_MSG_EN);
 var APP_ID_TEST = "mochatest";  // used for mocha tests to prevent warning
 // end Test hooks
 
@@ -42,19 +42,6 @@ exports.handler = function (event, context, callback) {
     alexa.execute();
 };
 
-/*
-    TODO (Part 2) add an intent for specifying a fact by year named 'GetNewYearFactIntent'
-    TODO (Part 2) provide a function for the new intent named 'GetYearFact' 
-        that emits a randomized fact that includes the year requested by the user
-        - if such a fact is not available, tell the user this and provide an alternative fact.
-    TODO (Part 3) Keep the session open by providing the fact with :askWithCard instead of :tellWithCard
-        - make sure the user knows that they need to respond
-        - provide a reprompt that lets the user know how they can respond
-    TODO (Part 3) Provide a randomized response for the GET_FACT_MESSAGE
-        - add message to the array GET_FACT_MSG_EN
-        - randomize this starting portion of the response for conversational variety
-*/
-
 var handlers = {
     'LaunchRequest': function () {
         this.emit('GetFact');
@@ -71,7 +58,7 @@ var handlers = {
         // Create speech output
         var speechOutput = this.t("GET_FACT_MESSAGE") + randomFact;
         var repromptMessage = this.t("REPROMPT_MESSAGE");
-        this.emit(':tellWithCard', speechOutput, this.t("SKILL_NAME"), randomFact);
+        this.emit(':askWithCard', speechOutput, repromptMessage, this.t("SKILL_NAME"), randomFact);
     },
     'GetNewYearFactIntent': function () {
         //TODO your code here
@@ -89,11 +76,11 @@ var handlers = {
                 var randomFact = randomPhrase(factArray);
                 var speechOutput = this.t("NO_FACT_WITH_YEAR") + randomFact;
                 var repromptMessage = this.t("REPROMPT_MESSAGE");
-                this.emit(':tellWithCard', speechOutput, repromptMessage, this.t("SKILL_NAME"), randomFact);
+                this.emit(':askWithCard', speechOutput, repromptMessage, this.t("SKILL_NAME"), randomFact);
             }else{
                 var speechOutput = this.t("GET_FACT_MESSAGE") + fact;
                 var repromptMessage = this.t("REPROMPT_MESSAGE");
-                this.emit(':tellWithCard', speechOutput, this.t("SKILL_NAME"), fact);
+                this.emit(':askWithCard', speechOutput, repromptMessage, this.t("SKILL_NAME"), fact);
             }
 
         }else{
