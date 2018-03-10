@@ -15,3 +15,35 @@ GetNewFactIntent tell me something interesting
 GetNewFactIntent can you tell me something interesting
 GetNewFactIntent give me something interesting
 
+GetNewYearFactIntent tell me a fact of {FACT_YEAR}
+GetNewYearFactIntent give me a fact of the year {FACT_YEAR}
+GetNewYearFactIntent fact {FACT_YEAR}
+GetNewYearFactIntent give something interesting of {FACT_YEAR}
+GetNewYearFactIntent can you tell me something insteresting of year {FACT_YEAR}
+GetNewYearFactIntent hey tell my a fact of {FACT_YEAR}
+GetNewYearFactIntent what happen in {FACT_YEAR}
+GetNewYearFactIntent what was the most important of {FACT_YEAR}
+GetNewYearFactIntent tell me something {FACT_YEAR}
+GetNewYearFactIntent a fact of {FACT_YEAR}
+GetNewYearFactIntent please a fact of {FACT_YEAR}
+GetNewYearFactIntent give a {FACT_YEAR} fact
+GetNewYearFactIntent {FACT_YEAR} fact 
+GetNewYearFactIntent I request a fact of {FACT_YEAR}
+GetNewYearFactIntent what can you tell me about {FACT_YEAR}
+
+{FACT_YEAR} 1950
+{FACT_YEAR} 1956
+{FACT_YEAR} 1997
+{FACT_YEAR} 1974
+{FACT_YEAR} 2005
+{FACT_YEAR} 2015
+{FACT_YEAR} 2045
+{FACT_YEAR} 1965
+{FACT_YEAR} 2006
+{FACT_YEAR} 1770
+{FACT_YEAR} 1966
+{FACT_YEAR} 2025
+{FACT_YEAR} 2014
+{FACT_YEAR} 2013
+{FACT_YEAR} 2010
+
