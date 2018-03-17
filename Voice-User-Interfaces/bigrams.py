@@ -1,5 +1,5 @@
 from collections import Counter
-import utils
+import numpy as np
 
 def sentence_to_bigrams(sentence):
     """
@@ -35,6 +35,27 @@ def bigrams_from_transcript(filename):
             bigrams = bigrams + line_bigrams
     return tokens, bigrams
 
+def bigram_add1_logs(transcript_file):
+    """
+    provide a smoothed log probability dictionary based on a transcript
+    :param transcript_file: string
+        transcript_file is the path filename containing unpunctuated text sentences
+    :return: dict
+        bg_add1_log_dict: dictionary of smoothed bigrams log probabilities including
+        tags: <s>: start of sentence, </s>: end of sentence, <unk>: unknown placeholder probability
+    """
+
+    tokens, bigrams = bigrams_from_transcript(transcript_file)
+    token_counts = Counter(tokens)
+    bigram_counts = Counter(bigrams)
+    vocab_count = len(token_counts)
+
+    bg_addone_dict = {}
+    for bg in bigram_counts:
+        bg_addone_dict[bg] = np.log((bigram_counts[bg] + 1.) / (token_counts[bg[0]] + vocab_count))
+    bg_addone_dict['<unk>'] = np.log(1. / vocab_count)
+    return bg_addone_dict
+
 def bigram_mle(tokens, bigrams):
     """
     provide a dictionary of probabilities for all bigrams in a corpus of text
@@ -59,8 +80,25 @@ def bigram_mle(tokens, bigrams):
         bg_mle_dict[bigram] = bigram_counts[bigram] / token_counts[bigram[0]]
     return bg_mle_dict
 
+def log_prob_of_sentence(sentence, bigram_log_dict):
+    tokens, bigrams = sentence_to_bigrams(sentence)
+    total_log_prob = 0.
+    for bigram in bigrams:
+        if bigram in bigram_log_dict:
+            total_log_prob = total_log_prob + bigram_log_dict[bigram]
+        else:
+            total_log_prob = total_log_prob + bigram_log_dict['<unk>']
+    return total_log_prob
+
+test_sentences = [
+    'the old man spoke to me',
+    'me to spoke man old the',
+    'old man me old man me',
+]
 
 def sample_run():
-    tokens, bigrams = bigrams_from_transcript('bigram-transcript.txt')
-    bg_dict = bigram_mle(tokens, bigrams)
-    print(bg_dict)
+    # sample usage by test code (this definition not actually run for the quiz)
+    bigram_log_dict = bigram_add1_logs('bigram-transcript.txt')
+    for sentence in test_sentences:
+        print('*** "{}"'.format(sentence))
+        print(log_prob_of_sentence(sentence, bigram_log_dict))
