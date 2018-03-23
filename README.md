@@ -16,6 +16,39 @@ In this lab I implemented Breadth-first search, Depth-First search, Uniform-cost
 - _Simulated annealing_:
 In this lab I implemented the simulated annealing algorithm to solve the Traveling Salesman Problem (TSP) between US state capitals. 
 
+## Term 2
+In the second term, I completed several exercises like: 
 
+- _Perceptron_,  _logistic_regression.py_, and  _xor_network.py_: 
+As the name implies, the first one is the perceptron algorithm, the second is the logistic regression algorithm, and the last one is an XOR multi-layer perceptron. 
+- _dl_concepts.py_: 
+This program only contains two functions seen in class, softmax and cross entropy. 
+
+Then I did different exercises according to each specialization:
+### Computer Vision
+- _Computer-Vision_:
+This directory contains three subdirectories corresponding to the first three stages of a general CV pipeline: Preprocessing, Image-segmentation and Features-recognition, each one has several programs related to its name. 
+
+- _CNN-cifar10_:
+It is a CNN model that uses data augmentation, and it is trained on the CIFAR-10 dataset using Keras.
+
+- _MLP_mnist_: 
+This is a Multi-layer perceptron to decode images of handwritten numerical digits.
+
+### Natural Language Processing
+
+- _AIND-NLP-Bookworm_
+This is a simple question-answering system built using IBM Watson's NLP services.
+
+- _Natural-Language-Processing_
+The directory contains two subdirectories which are part of a general NLP pipeline: Text-processing and Modeling. 
+
+### Voice User Interfaces
+
+- _AIND-VUI-ALEXA_:
+This is an Alexa skill which provides year-dates facts from AI history.
+
+- _Voice-User-Interfaces_:
+This directory contains programs related to automatic speech recognition. Specifically: feature extraction and language model (N-grams) to strengthen out language ambiguities.
 
 
